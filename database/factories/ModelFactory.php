@@ -23,6 +23,7 @@ $factory->define(CodeFin\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+//Criação do state do tipo admin
 $factory->state(\CodeFin\User::class, 'admin', function(Faker\Generator $faker){
         return [
             'role' => \CodeFin\User::ROLE_ADMIN

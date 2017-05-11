@@ -11,6 +11,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        //CRIAÇÃO USUÁRIO FAKE COM A ROLE admin
         factory(\CodeFin\User::class, 1)
         ->states('admin')
         ->create([
@@ -18,5 +19,13 @@ class UsersTableSeeder extends Seeder
             'email' => 'admin@teste.com',
             'password' => bcrypt('123456')
         ]);
+
+        //CRIAÇÃO USUÁRIO FAKE COM A ROLE client
+        factory(\CodeFin\User::class, 1)        
+        ->create([
+            'name' => 'Usuário Comum',
+            'email' => 'teste@teste.com',
+            'password' => bcrypt('123456')
+        ]);        
     }
 }
