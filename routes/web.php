@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Gate;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,11 +12,30 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('user', function () {
+    \Illuminate\Support\Facades\Auth::LoginUsingId(2);
+});
 
-Route::get('/', function () {
+Route::get('/', function () {   
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('/home', function(){
+    return redirect()->route('admin.home');
+}); 
 
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();   
+
+
+/*GRUPO ADMIN*/
+Route::group([    
+    'prefix' => 'admin',     
+    'as' => 'admin.'
+    ], function () {
+
+    Auth::routes();
+
+    Route::group(['middleware' => 'can:access-admin'], function () {
+        Route::get('/home', 'HomeController@index')->name('home');        
+    }); 
+});
